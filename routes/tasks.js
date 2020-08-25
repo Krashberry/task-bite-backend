@@ -1,13 +1,13 @@
-const router = require('express');
+const router = require('express').Router;
 const ctrl = require('../controllers');
-const routes = require('.');
+
 
 // routes
-routes.get('/', ctrl.tasks.index);
-routes.get('/:id', ctrl.tasks.show);
-routes.post('/', ctrl.tasks.create);
-routes.put('/:id', ctrl.tasks.update);
-routes.delete('/:id', ctrl.tasks.destroy);
+router.get('/', ctrl.tasks.index);
+router.get('/:id', ctrl.tasks.show);
+router.post('/', ctrl.tasks.create);
+router.put('/:id', ctrl.tasks.update);
+router.delete('/:id', ctrl.tasks.destroy);
 
 // exports
 module.exports = router;

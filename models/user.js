@@ -11,7 +11,11 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  userProjects: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project'
+  }]
 })
 
 const User = mongoose.model('User', UserSchema)

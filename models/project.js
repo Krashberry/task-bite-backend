@@ -1,20 +1,15 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-
 const ProjectSchema = new Schema({
-  projectId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   projectName: {
     type: String,
     required: true
   },
-  projectPercentage: {
-    type: Number
-  }
+  userTasks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Task'
+  }]
 })
 
 const Project = mongoose.model('Project', ProjectSchema)

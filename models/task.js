@@ -8,7 +8,7 @@ const TaskSchema = new Schema({
   },
   taskStatus: {
     type: String,
-  }, 
+  }
 })
 
 const Task = mongoose.model('Task', TaskSchema)

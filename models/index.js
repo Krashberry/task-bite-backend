@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const connectionString = process.env.MONGODB_URI || "mongodb://localhost:27017/task-bite/back-end"
+const connectionString = process.env.MONGODB_URI || "mongodb://localhost:27017/task-bite"
+
 const configOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
