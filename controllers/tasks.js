@@ -17,47 +17,53 @@ const show = (req, res) => {
   db.Task.findById(req.params.id, (err, foundTasks) => {
     if(err) console.log('Error in tasks#show:', err);
 
-    if (!foundTasks.length) return res.json({
-      message: 'No task found in the database.'
+    if (!foundTasks) return res.json({
+      message: 'No task found in the database to show.'
     })
     
-    res.status(200).json({ tasks: foundTasks })
+    res.json({ tasks: foundTasks })
   });
 };
 
 const create = (req, res) => {
-  db.Task.create(req.body, (err, savedTasks) => {
+
+  if (typeof(req.body.type !== 'string')) {
+    res.json({ message: 'Invalid task name.' })
+  }
+
+  db.Task.create(req.body, (err, savedTask) => {
     if(err) console.log('Error in tasks#create:', err);
 
-    if (!savedTasks.length) return res.json({
-      message: 'No task saved in the database.'
+    if (!savedTask) return res.json({
+      message: 'Task could not be saved to the database.'
     })
     
-    res.status(200).json({ tasks: savedTasks })
+    res.json({ task: savedTask })
   });
 };
 
 const update = (req, res) => {
-  db.Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTasks) => {
-    if(err) console.log('Error in tasks#update:', err);
+  db.Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTask) => {
+    if(err) console.log('Error in task#update:', err);
 
-    if (!updatedTasks.length) return res.json({
-      message: 'No task updated in the database.'
+    if (!updatedTask) return res.json({
+      message: 'Task could not be updated :( '
     })
     
-    res.status(200).json({ tasks: updatedTasks })
+    res.json({ 
+      task: updatedTask,
+      message: `${updatedTask.taskName} was updated!`
+    })
   });
 };
 
 const destroy = (req, res) => {
-  db.Task.findByIdAndDelete(req.params.id, (err, deletedTasks) => {
+  db.Task.findByIdAndDelete(req.params.id, (err, deletedTask) => {
     if(err) console.log('Error in tasks#destroy:', err);
-
-    if (!deletedTasks.length) return res.json({
-      message: 'No task deleted in the database.'
-    })
     
-    res.status(200).json({ tasks: deletedTasks })
+    res.json({ 
+      message: `Task has been deleted! Press F in the chat.`
+    })
   });
 };
 

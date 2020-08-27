@@ -6,9 +6,9 @@ const ProjectSchema = new Schema({
     type: String,
     required: true
   },
-  userTasks: [{
+  projectTasks: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Task'
+    ref: "Task"
   }]
 })
 

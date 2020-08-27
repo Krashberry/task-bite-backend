@@ -1,0 +1,42 @@
+{
+  "tasks": [
+    {
+      "taskName": [
+        "Plan",
+        "Get Approval",
+        "Get Bak End Done",
+        "Get Front End Done",
+        "Connect"
+      ],
+      "taskStatus": [
+        "Done",
+        "In Progress",
+        "Next Up"
+      ]
+    },
+    {
+      "taskName": [
+        "Pick Bread",
+        "Pick Filling",
+        "Pick Toppings",
+        "Check Friedge For Ingredients"
+      ],
+      "taskStatus": [
+        "Done",
+        "Done",
+        "In Progress",
+        "Next Up"
+      ]
+    },
+    {
+      "taskName": [
+        "Brush Teeth", 
+        "Wear Pants"
+      ],
+      "taskStatus": [
+        "Done",
+        "In Progress"
+      ]
+    }
+  ]
+}

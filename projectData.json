@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "projectName": "Project X",
+      "projectTasks": [{
+        "type": "mongoose.Schema.Types.ObjectId",
+        "ref": "Task"
+      }]
+    },
+    {
+      "projectName": "Turkey Sandwitch",
+      "projectTasks": [{
+        "type": "mongoose.Schema.Types.ObjectId",
+        "ref": "Task"
+      }]
+    },
+    {
+      "projectName": "Virtual Date",
+      "projectTasks": [{
+        "type": "mongoose.Schema.Types.ObjectId",
+        "ref": "Task"
+      }]
+    }
+  ]
+}

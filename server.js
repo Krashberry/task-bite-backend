@@ -9,7 +9,8 @@ const passport = require('./passport')
 const port = process.env.PORT || 3001 //3001 is backend while 3000 is frontend in React
 
 // middleware - JSON parsing
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded());
 
 // middleware - API routes
 app.use('/api/projects', routes.projects);

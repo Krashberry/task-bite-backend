@@ -17,46 +17,48 @@ const show = (req, res) => {
     if(err) console.log('Error in projects#show:', err);
 
     if (!savedProjects.length) return res.json({
-      message: 'No Project saved in the database.'
+      message: 'No project in the database to show.'
     })
     
-    res.status(200).json({ projects: savedProjects })
+    res.json({ projects: foundProjects })
   });
 };
 
 const create = (req, res) => {
-  db.Project.create(req.body, (err, savedProjects) => {
+
+  if (typeof(req.body.type))
+  db.Project.create(req.body, (err, savedProject) => {
     if(err) console.log('Error in projects#create:', err);
 
-    if (!savedProjects.length) return res.json({
-      message: 'No Project saved in the database.'
+    if (!savedProject) return res.json({
+      message: 'Project could not be saved to the database.'
     })
     
-    res.status(200).json({ projects: savedProjects })
+    res.json({ project: savedProject })
   });
 };
 
 const update = (req, res) => {
-  db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProjects) => {
-    if(err) console.log('Error in projects#update:', err);
+  db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProject) => {
+    if(err) console.log('Error in project#update:', err);
 
-    if (!updatedProjects.length) return res.json({
-      message: 'No project updated in the database.'
+    if (!updatedProject) return res.json({
+      message: 'Project could not be updated :( '
     })
     
-    res.status(200).json({ projects: updatedProjects })
-  });
+    res.json({ 
+      task: updatedProject,
+      message: `${updatedProject.projectName} was updated!`
+    })  });
 };
 
 const destroy = (req, res) => {
-  db.Project.findByIdAndDelete(req.params.id, (err, deletedProjects) => {
-    if(err) console.log('Error in projects#destroy:', err);
-
-    if (!deletedProjects.length) return res.json({
-      message: 'No project deleted in the database.'
-    })
+  db.Project.findByIdAndDelete(req.params.id, (err, deletedProject) => {
+    if(err) console.log('Error in project#destroy:', err);
     
-    res.status(200).json({ projects: deletedProjects })
+    res.json({ 
+      message: `Project has been deleted! Press F in the chat.`
+    })  
   });
 };
 
