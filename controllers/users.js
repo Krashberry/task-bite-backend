@@ -20,6 +20,7 @@ const show = (req, res) => {
       message: 'No users found by that ID in the database.'
     })
 
+    console.log(foundUsers)
     res.json({ users: foundUsers })
 
   });
