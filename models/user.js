@@ -18,14 +18,25 @@ const UserSchema = new Schema({
   }]
 })
 
-// UserSchema.methods = {
-//   checkPassword: function (inputPassword) {
-//     return bcrypt.compareSync(inputPassword, this.password)
-//   },
-//   hashPassword: function (plainTextPassword) {
-//     const salt = bcrypt.genSalt(10)
-//   }
-// }
+UserSchema.methods = {
+  checkPassword: function (inputPassword) {
+    return bcrypt.compareSync(inputPassword, this.password)
+  },
+  hashPassword: function (plainTextPassword) {
+    const salt = bcrypt.genSalt(10)
+
+    return bcrypt.hashSync(plainTextPassword, salt)
+  }
+}
+
+UserSchema.pre('save', next => {
+  if(!this.password) {
+    next()
+  } else {
+    this.password = this.hashPassword(this.password)
+    next()
+  }
+})
 
 const User = mongoose.model('User', UserSchema)
 
