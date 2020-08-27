@@ -1,41 +1,70 @@
 const db = require('../models');
+const { findOneAndUpdate } = require('../models/task');
 
 const index = (req, res) => {
   db.Task.find({}, (err, foundTasks) => {
     if (err) console.log('Error in tasks#index:', err);
 
-    res.send("Incomplete tasks#index controller function");
+    if (!foundTasks.length) return res.json({
+      message: 'No task found in the database.'
+    })
+    
+    res.status(200).json({ tasks: foundTasks })
   });
 };
 
 const show = (req, res) => {
-  db.Task.findById(req.params.id, (err, foundTask) => {
+  db.Task.findById(req.params.id, (err, foundTasks) => {
     if(err) console.log('Error in tasks#show:', err);
 
-    res.send("Icomplete tasks#show cotnroller function");
+    if (!foundTasks.length) return res.json({
+      message: 'No task found in the database.'
+    })
+    
+    res.status(200).json({ tasks: foundTasks })
   });
 };
 
 const create = (req, res) => {
-  db.Task.create(req.body, (err, savedTask) => {
+  db.Task.create(req.body, (err, savedTasks) => {
     if(err) console.log('Error in tasks#create:', err);
 
-    res.send("Icomplete tasks#create controller function");
+    if (!savedTasks.length) return res.json({
+      message: 'No task saved in the database.'
+    })
+    
+    res.status(200).json({ tasks: savedTasks })
   });
 };
 
 const update = (req, res) => {
-  db.Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTask) => {
+  db.Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTasks) => {
     if(err) console.log('Error in tasks#update:', err);
 
-    res.send("Icomplete tasks#update controller function");
+    if (!updatedTasks.length) return res.json({
+      message: 'No task updated in the database.'
+    })
+    
+    res.status(200).json({ tasks: updatedTasks })
   });
 };
 
 const destroy = (req, res) => {
-  db.Task.findByIdAndDelete(req.params.id, (err, deletedTask) => {
+  db.Task.findByIdAndDelete(req.params.id, (err, deletedTasks) => {
     if(err) console.log('Error in tasks#destroy:', err);
 
-    res.send("Icomplete tasks#destroy controller function");
+    if (!deletedTasks.length) return res.json({
+      message: 'No task deleted in the database.'
+    })
+    
+    res.status(200).json({ tasks: deletedTasks })
   });
 };
+
+module.exports = {
+  index, 
+  show,
+  create,
+  update,
+  destroy
+}

@@ -18,6 +18,15 @@ const UserSchema = new Schema({
   }]
 })
 
+// UserSchema.methods = {
+//   checkPassword: function (inputPassword) {
+//     return bcrypt.compareSync(inputPassword, this.password)
+//   },
+//   hashPassword: function (plainTextPassword) {
+//     const salt = bcrypt.genSalt(10)
+//   }
+// }
+
 const User = mongoose.model('User', UserSchema)
 
 module.exports = User;

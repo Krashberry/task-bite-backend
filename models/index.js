@@ -9,7 +9,7 @@ const configOptions = {
   useFindAndModify: false,
 };
 
-mongoose.connect(connectionString, configuration)
+mongoose.connect(connectionString, configOptions)
   .then(() => console.log('MongoDB successfully connected...'))
   .catch(err => console.log(`MongoDB connection: ${err}`));
 

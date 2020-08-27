@@ -4,39 +4,66 @@ const index = (req, res) => {
   db.Project.find({}, (err, foundProjects) => {
     if (err) console.log('Error in projects#index:', err);
 
-    res.send("Incomplete projects#index controller function");
+    if (!foundProjects.length) return res.json({
+      message: 'No project found in the database.'
+    })
+    
+    res.status(200).json({ projects: foundProjects })
   });
 };
 
 const show = (req, res) => {
-  db.Project.findById(req.params.id, (err, foundProject) => {
+  db.Project.findById(req.params.id, (err, foundProjects) => {
     if(err) console.log('Error in projects#show:', err);
 
-    res.send("Icomplete projects#show cotnroller function");
+    if (!savedProjects.length) return res.json({
+      message: 'No Project saved in the database.'
+    })
+    
+    res.status(200).json({ projects: savedProjects })
   });
 };
 
 const create = (req, res) => {
-  db.Project.create(req.body, (err, savedProject) => {
+  db.Project.create(req.body, (err, savedProjects) => {
     if(err) console.log('Error in projects#create:', err);
 
-    res.send("Icomplete projects#create controller function");
+    if (!savedProjects.length) return res.json({
+      message: 'No Project saved in the database.'
+    })
+    
+    res.status(200).json({ projects: savedProjects })
   });
 };
 
 const update = (req, res) => {
-  db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProject) => {
+  db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProjects) => {
     if(err) console.log('Error in projects#update:', err);
 
-    res.send("Icomplete projects#update controller function");
+    if (!updatedProjects.length) return res.json({
+      message: 'No project updated in the database.'
+    })
+    
+    res.status(200).json({ projects: updatedProjects })
   });
 };
 
 const destroy = (req, res) => {
-  db.Project.findByIdAndDelete(req.params.id, (err, deletedProject) => {
+  db.Project.findByIdAndDelete(req.params.id, (err, deletedProjects) => {
     if(err) console.log('Error in projects#destroy:', err);
 
-    res.send("Icomplete projects#destroy controller function");
+    if (!deletedProjects.length) return res.json({
+      message: 'No project deleted in the database.'
+    })
+    
+    res.status(200).json({ projects: deletedProjects })
   });
 };
 
+module.exports = {
+  index, 
+  show,
+  create,
+  update,
+  destroy
+}
