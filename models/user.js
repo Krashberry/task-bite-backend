@@ -23,13 +23,14 @@ UserSchema.methods = {
     return bcrypt.compareSync(inputPassword, this.password)
   },
   hashPassword: function (plainTextPassword) {
-    const salt = bcrypt.genSalt(10)
+    const salt = bcrypt.genSaltSync(10)
+    console.log(salt)
 
     return bcrypt.hashSync(plainTextPassword, salt)
   }
 }
 
-UserSchema.pre('save', next => {
+UserSchema.pre('save', function(next) {
   if(!this.password) {
     next()
   } else {
