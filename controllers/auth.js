@@ -37,12 +37,14 @@ const register = (req, res) => {
 }
 const logout = (req, res) => {
   if (!req.user) return res.json({
-    message: 'No sser to logout.'
+    message: 'No user to logout.'
   })
 
   req.logout()
   res.json({ message: 'User logged out.'})
+  res.redirect('/')
 }
+
 const verify = (req, res) => {
   
 }
