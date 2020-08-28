@@ -45,6 +45,7 @@ const logout = (req, res) => {
   res.redirect('/')
 }
 
+// dev use
 const verify = (req, res) => {
   
 }
