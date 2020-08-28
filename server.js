@@ -12,7 +12,29 @@ const port = process.env.PORT || 3001 //3001 is backend while 3000 is frontend i
 app.use(express.json());
 
 // middleware - cors
-app.use(cors())
+const corsOptions = {
+  origin: ['http//localhost:3000'], // task-bite.heroku.com
+  credentials: true,
+  optionsSuccessStatus: 204
+}
+
+app.use(cors(corsOptions))
+
+// middleware - sessions config
+app.use(session({
+  store: new MongoStore({ url: process.env.MONGODB_URI || "mongodb://localhost:27017/task-bite" }),
+  // this could go in an env -> process.env.secret
+  secret: "AnotherAllNighter",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}))
+
+// middleware - passport config 
+app.use(passport.initialize())
+app.use(passport.session())
 
 // middleware - API routes
 app.use('/api/silo/projects', routes.projects);
