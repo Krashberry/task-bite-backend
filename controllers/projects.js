@@ -16,7 +16,7 @@ const show = (req, res) => {
   db.Project.findById(req.params.id, (err, foundProjects) => {
     if(err) console.log('Error in projects#show:', err);
 
-    if (!savedProjects.length) return res.json({
+    if (!foundProjects.length) return res.json({
       message: 'No project in the database to show.'
     })
     

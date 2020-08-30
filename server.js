@@ -13,7 +13,7 @@ app.use(express.json());
 
 // middleware - cors
 const corsOptions = {
-  origin: ['http//localhost:3000'], // task-bite.heroku.com
+  origin: ['http://localhost:3000'], // task-bite.heroku.com
   credentials: true,
   optionsSuccessStatus: 204
 }

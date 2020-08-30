@@ -27,7 +27,6 @@ const show = (req, res) => {
 };
 
 const create = (req, res) => {
-  // validation
   if (typeof(req.body.password !== 'string')) {
     res.json({ message: 'Invalid Password format.'})
   }
@@ -54,5 +53,6 @@ const destroy = (req, res) => {
 module.exports = {
   index,
   show,
-  create
+  create,
+  destroy
 }

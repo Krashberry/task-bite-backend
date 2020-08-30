@@ -4,10 +4,9 @@ const bcrypt = require('bcrypt')
 const login = (req, res) => {
   console.log('req.user here >>>>>>>>', req.user)
   console.log('req.session here >>>>>>>>>', req.session)
-  res.json({ user: req.user.username })
+  res.json({ user: req.user.username, projects: req.user.userProjects, tasks: req.user.userTasks })
 }
 const register = (req, res) => {
-
   const { username, password } = req.body
   if (!username || !password) {
       return res.json({
