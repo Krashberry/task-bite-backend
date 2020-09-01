@@ -2,7 +2,9 @@ const db = require('../models');
 const { findOneAndUpdate } = require('../models/task');
 
 const index = (req, res) => {
-  db.Task.find({}, (err, foundTasks) => {
+  db.Task.find({
+    projectId: req.query.projectId
+  }, (err, foundTasks) => {
     if (err) console.log('Error in tasks#index:', err);
 
     if (!foundTasks.length) return res.json({
@@ -25,21 +27,19 @@ const show = (req, res) => {
   });
 };
 
-const create = (req, res) => {
-
-  if (typeof(req.body.type !== 'string')) {
-    res.json({ message: 'Invalid task name.' })
+async function create(req, res) {
+  try { 
+    const newTask = await db.Task.create(req.body);
+    const project = await db.Project.findById(req.body.projectId);
+    project.projectTasks.push(newTask._id);
+    await project.save();
+    res.json(newTask);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json ({
+      message: 'Server Error while trying to create new task :('
+    });
   }
-
-  db.Task.create(req.body, (err, savedTask) => {
-    if(err) console.log('Error in tasks#create:', err);
-
-    if (!savedTask) return res.json({
-      message: 'Task could not be saved to the database.'
-    })
-    
-    res.json({ task: savedTask })
-  });
 };
 
 const update = (req, res) => {

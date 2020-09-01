@@ -1,42 +1,61 @@
 const db = require('../models');
+const { ReplSet } = require('mongodb');
 
-const index = (req, res) => {
-  db.Project.find({}, (err, foundProjects) => {
-    if (err) console.log('Error in projects#index:', err);
-
-    if (!foundProjects.length) return res.json({
-      message: 'No project found in the database.'
+async function index(req, res) {
+  try {
+    const foundProjects = await db.Project.find({
+      userId: req.query.userId, 
     })
-    
-    res.status(200).json({ projects: foundProjects })
-  });
+    res.json(foundProjects)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      message: 'Error trying to display project index.'
+    })
+  }
+}
+
+async function show(req, res) {
+  try {
+    const foundProject = await db.Project.findById(req.params.id);
+    res.json(foundProject);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json ({
+      message: 'Projects could not be shown.'
+    });
+  }
 };
 
-const show = (req, res) => {
-  db.Project.findById(req.params.id, (err, foundProjects) => {
-    if(err) console.log('Error in projects#show:', err);
-
-    if (!foundProjects.length) return res.json({
-      message: 'No project in the database to show.'
-    })
-    
-    res.json({ projects: foundProjects })
-  });
+async function create(req, res) {
+  try { 
+    const newProject = await db.Project.create(req.body);
+    const user = await db.User.findById(req.body.userId);
+    user.userProjects.push(newProject._id);
+    await user.save();
+    res.json(newProject);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json ({
+      message: 'Server Error while trying to create new project :('
+    });
+  }
 };
 
-const create = (req, res) => {
+// const create = (req, res) => {
 
-  if (typeof(req.body.type))
-  db.Project.create(req.body, (err, savedProject) => {
-    if(err) console.log('Error in projects#create:', err);
+//   if (typeof(req.body.type))
+//   db.Project.create(req.body, (err, savedProject) => {
+//     if(err) console.log('Error in projects#create:', err);
 
-    if (!savedProject) return res.json({
-      message: 'Project could not be saved to the database.'
-    })
+//     if (!savedProject) return res.json({
+//       message: 'Project could not be saved to the database.'
+//     })
     
-    res.json({ project: savedProject })
-  });
-};
+//     res.json({ projects: savedProject })
+//   });
+// };
+
 
 const update = (req, res) => {
   db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProject) => {
@@ -57,7 +76,7 @@ const destroy = (req, res) => {
     if(err) console.log('Error in project#destroy:', err);
     
     res.json({ 
-      message: `Project has been deleted! Press F in the chat.`
+      message: 'Project has been deleted! Press F in the chat.'
     })  
   });
 };
