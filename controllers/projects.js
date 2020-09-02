@@ -3,8 +3,9 @@ const { ReplSet } = require('mongodb');
 
 async function index(req, res) {
   try {
+    console.log("user:", req.user)
     const foundProjects = await db.Project.find({
-      userId: req.query.userId, 
+      userId: req.user._id, 
     })
     res.json(foundProjects)
   } catch (err) {
@@ -41,21 +42,6 @@ async function create(req, res) {
     });
   }
 };
-
-// const create = (req, res) => {
-
-//   if (typeof(req.body.type))
-//   db.Project.create(req.body, (err, savedProject) => {
-//     if(err) console.log('Error in projects#create:', err);
-
-//     if (!savedProject) return res.json({
-//       message: 'Project could not be saved to the database.'
-//     })
-    
-//     res.json({ projects: savedProject })
-//   });
-// };
-
 
 const update = (req, res) => {
   db.Project.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedProject) => {

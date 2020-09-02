@@ -41,7 +41,6 @@ const logout = (req, res) => {
 
   req.logout()
   res.json({ message: 'User logged out.'})
-  res.redirect('/')
 }
 
 // dev use
