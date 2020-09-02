@@ -2,23 +2,33 @@ const db = require('../models');
 const { ReplSet } = require('mongodb');
 
 async function index(req, res) {
-  try {
-    console.log("user:", req.user)
-    const foundProjects = await db.Project.find({
-      userId: req.user._id, 
-    })
-    res.json(foundProjects)
-  } catch (err) {
-    console.log(err)
-    res.status(500).json({
-      message: 'Error trying to display project index.'
+  if(req.user) {
+    try {
+      console.log("user:", req.user)
+      const foundProjects = await db.Project.find({
+        userId: req.user._id, 
+      })
+      res.json(foundProjects)
+    } catch (err) {
+      // console.log(err)
+      res.status(500).json({
+        message: 'Error trying to display project index.'
+      })
+    }
+  } else {
+    res.json({
+      message: "UNAUTHORIZED: User not authenticated. Please log in.", 
+      status: 401
     })
   }
 }
 
 async function show(req, res) {
+  console.log(req.user)
   try {
-    const foundProject = await db.Project.findById(req.params.id);
+    const foundProject = await db.Project.find({
+      userId: req.user._id, 
+    });
     res.json(foundProject);
   } catch (err) {
     console.log(err);
