@@ -32,7 +32,6 @@ const register = (req, res) => {
       res.json(savedUser)
     })
   })
-
 }
 const logout = (req, res) => {
   if (!req.user) return res.json({
