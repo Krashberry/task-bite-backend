@@ -1,5 +1,4 @@
 const db = require('../models');
-const { ReplSet } = require('mongodb');
 
 async function index(req, res) {
   if(req.user) {

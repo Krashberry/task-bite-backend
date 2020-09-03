@@ -8,7 +8,8 @@ const ProjectSchema = new Schema({
   },
   projectName: {
     type: String,
-    required: true
+    required: true,
+    minlength: 1
   },
   projectTasks: [{
     type: mongoose.Schema.Types.ObjectId,
