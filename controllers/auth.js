@@ -1,6 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcrypt')
-​
+
 const login = (req, res) => {
   console.log('req.user here >>>>>>>>', req.user)
   console.log('req.session here >>>>>>>>>', req.session)
@@ -13,7 +13,7 @@ const register = (req, res) => {
         message: 'Please enter a valid username and password.'
     })
   }
-​
+
   db.User.findOne({ username: username }, (err, foundUser) => {
     if (err) return res.json({
       message: 'Something went wrong.'
@@ -21,9 +21,9 @@ const register = (req, res) => {
     if (foundUser) return res.json({
       message: 'That username is already in use.'
     })
-​
+
     bcrypt.genSalt(10, (err, salt) => {
-​
+
       bcrypt.hash(req.body.password, salt, (err, hashedPassword) => {
   
         const newUser = {
@@ -47,16 +47,16 @@ const logout = (req, res) => {
   if (!req.user) return res.json({
     message: 'No user to logout.'
   })
-​
+
   req.logout()
   res.json({ message: 'User logged out.'})
 }
-​
+
 // dev use
 const verify = (req, res) => {
   
 }
-​
+
 module.exports = {
   login,
   register,

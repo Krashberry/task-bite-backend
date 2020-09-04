@@ -17,3 +17,4 @@
   - creating some components for logging in, registering, logging out
   - making fetch requests to the user/auth related functionality on the server
   - protcting certain components from unauthorized users 
+

@@ -6,7 +6,7 @@ async function index(req, res) {
       console.log("user:", req.user)
       const foundProjects = await db.Project.find({
         userId: req.user._id, 
-      })
+      }).populate("projectTasks")
       res.json(foundProjects)
     } catch (err) {
       // console.log(err)
@@ -63,7 +63,8 @@ const update = (req, res) => {
     res.json({ 
       task: updatedProject,
       message: `${updatedProject.projectName} was updated!`
-    })  });
+    })  
+  });
 };
 
 const destroy = (req, res) => {
